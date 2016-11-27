@@ -28,10 +28,16 @@ public class BingDicGet {
         if (m1.find()) {
             String means = m1.group(2);
             Pattern getChinese = Pattern.compile("(?m)<li><span class=\"pos\">(.*?)</span><span class=\"def\"><span>(.*?)</span></span></li>"); 
-            Matcher m2 = getChinese.matcher(means);
+            Matcher m2 = getChinese.matcher(means);         
             while (m2.find()) {              
                 //System.out.println(m2.group(1));
             	save.add(m2.group(1)+m2.group(2));
+            }
+            Pattern getWebChinese = Pattern.compile("(?m)<li><span class=\"pos web\">(.*?)</span><span class=\"def\"><span>(.*?)</span></span></li>"); 
+            Matcher m3 = getWebChinese.matcher(means);         
+            while (m3.find()) {              
+                //System.out.println(m2.group(1));
+            	save.add(m3.group(1)+":"+m3.group(2));
             }
         }
         

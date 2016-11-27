@@ -4,25 +4,25 @@ import java.io.*;
 import java.net.*;
 
 public class Client {
-	//¶Ë¿Ú
+	//ï¿½Ë¿ï¿½
 	static int port=8000;
 	static Socket socket=null;
 	static DataOutputStream  out=null;
 	static DataInputStream  in=null;
 	
 	public static void main(String []args) throws IOException {
-		//TODO:GUI½çÃæ³õÊ¼»¯
+		//TODO:GUIï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 		
 		
 		
 		//*****************	
 		//test
 		connect();
-		searchWord("love");
+		searchWord("supermans");
 	}
 	
 	public static void connectPort(){
-		try{//¿Í»§¶Ë³õÊ¼»¯
+		try{//ï¿½Í»ï¿½ï¿½Ë³ï¿½Ê¼ï¿½ï¿½
 			socket=new Socket("localhost",port);
 			out=new DataOutputStream(socket.getOutputStream());
 			in=new DataInputStream(socket.getInputStream());
@@ -34,9 +34,9 @@ public class Client {
 	public static void connect() {
 		connectPort();
 		try{
-			out.writeUTF("0|ÇëÇóÁ¬½Ó");
+			out.writeUTF("0|è¯·æ±‚è¿žæŽ¥");
 			String news=in.readUTF();
-			//TODO:·þÎñÆ÷Á¬½Ó½Ó¿Ú
+			//TODO:
 			System.out.println(news);
 			
 			
@@ -49,26 +49,32 @@ public class Client {
 		
 	}
 	
-	public static void searchWord(String word){
+	public static String[] searchWord(String word){
 		connectPort();
+		String wordEx[]=null;
 		try {
 			out.writeUTF("1|"+word);
 			String news=in.readUTF();
-			String wordEx[]=news.split("\\|");
+			wordEx=news.split("\\|");
+			/*
 			String youdaoEx=wordEx[0];
 			String baiduEx=wordEx[1];
 			String bingEx=wordEx[2];
-			//TODO:´Êµä²éÕÒ½Ó¿Ú
-			System.out.println(youdaoEx);
-			System.out.println(baiduEx);
-			System.out.println(bingEx);
+			*/
+			for(int i=0;i<3;i++){
+			System.out.println(wordEx[i]);
+			}
+			socket.close();
+			return wordEx;
+			//TODO:
+			
 			
 			//*****************
-			socket.close();
+			
 		} catch (IOException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Éµï¿½ catch ï¿½ï¿½
 			e.printStackTrace();
 		}
-		
+		return wordEx;
 	}
 }

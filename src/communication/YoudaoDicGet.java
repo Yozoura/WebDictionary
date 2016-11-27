@@ -26,16 +26,23 @@ public class YoudaoDicGet {
 	    }   
 	    String content=contentBuf.toString();
 	    
-        Pattern searchMeanPattern = Pattern.compile("(?s)<div class=\"trans-container\">.*?<ul>.*?</div>");
+        Pattern searchMeanPattern = Pattern.compile("(?s)<div class=\"trans-container\">(.*?)</div>");
         Matcher m1 = searchMeanPattern.matcher(content); 
         if (m1.find()) {
-            String means = m1.group();
-            Pattern getChinese = Pattern.compile("(?m)<li>(.*?)</li>"); 
-            Matcher m2 = getChinese.matcher(means);
-            while (m2.find()) {              
-                //System.out.println(m2.group(1));
-            	save.add(m2.group(1));
-            }
+        	{
+        		String means = m1.group(1);
+        		Pattern ifHasH4=Pattern.compile("<h4>(.*?)</h4>");
+        		Matcher m2=ifHasH4.matcher(means);
+        		if(!m2.find()){
+        			Pattern getChinese = Pattern.compile("(?m)<li>(.*?)</li>"); 
+        			Matcher m3 = getChinese.matcher(means);
+        			while (m3.find()) {              
+        				//System.out.println(m2.group(1));
+        				save.add(m3.group(1));
+        			}
+        		}
+        		
+        	}
         }
         
         if(save.size()==0){

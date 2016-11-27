@@ -8,18 +8,19 @@ import java.net.*;
 
 //服务器端
 public class Server {
+	//设定端口
 	static int port=8000;
 	
 	public static void main(String[] args)throws Exception{		
 		//DicSearch Demo
-		/*
-		String test[]=BingDicGet.Trans("love");
+		///*
+		String test[]=YoudaoDicGet.Trans("superman");
 		for(int i=0;i<test.length;i++){
 			System.out.println(test[i]);
 		}
-		*/
-		//设定端口	
-		
+		//*/
+			
+		/*
 		//服务器端建立一个Serversocket
 		ServerSocket server=new ServerSocket(port);	
 		//server.close();	
@@ -29,7 +30,7 @@ public class Server {
 			Thread thread=new Thread(new Task(socket));
 			thread.start();
 		}
-		
+		//*/
 	}
 
 
@@ -79,25 +80,36 @@ static class Task implements Runnable{
 			break;
 		case "1":String word=news[1];
 			try{
-				String youdaoEx[]=YoudaoDicGet.Trans(word);
-				String baiduEx[]=BaiduDicGet.Trans(word);
-				String bingEx[]=BingDicGet.Trans(word);
-				StringBuilder wordEx=new StringBuilder(responseNews);			
-				for(int i=0;i<youdaoEx.length;i++){
-					wordEx.append(youdaoEx[i]);
-					wordEx.append("\n");
+				if(ifIsWord(word)){//若是一个单词进行查找
+					String youdaoEx[]=YoudaoDicGet.Trans(word);
+					String baiduEx[]=BaiduDicGet.Trans(word);
+					String bingEx[]=BingDicGet.Trans(word);
+					StringBuilder wordEx=new StringBuilder(responseNews);			
+					for(int i=0;i<youdaoEx.length;i++){
+						wordEx.append(youdaoEx[i]);
+						wordEx.append("\n");
+					}
+					wordEx.append("|");
+					for(int i=0;i<baiduEx.length;i++){
+						wordEx.append(baiduEx[i]);
+						wordEx.append("\n");
+					}
+					wordEx.append("|");
+					for(int i=0;i<bingEx.length;i++){
+						wordEx.append(bingEx[i]);
+						wordEx.append("\n");
+					}
+					responseNews=wordEx.toString();
 				}
-				wordEx.append("|");
-				for(int i=0;i<baiduEx.length;i++){
-					wordEx.append(baiduEx[i]);
-					wordEx.append("\n");
+				else{//若不是一个单词则返回原词组即可
+					StringBuilder wordEx=new StringBuilder(responseNews);
+					wordEx.append(word);
+					wordEx.append("|");
+					wordEx.append(word);
+					wordEx.append("|");
+					wordEx.append(word);
+					responseNews=wordEx.toString();
 				}
-				wordEx.append("|");
-				for(int i=0;i<bingEx.length;i++){
-					wordEx.append(bingEx[i]);
-					wordEx.append("\n");
-				}
-				responseNews=wordEx.toString();
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -106,6 +118,14 @@ static class Task implements Runnable{
 		default:break;
 		}
 		return responseNews;
+	}
+	
+	public boolean ifIsWord(String word){
+		String sp[]=word.split(" ");
+		if(sp.length>1){
+			return false;
+		}
+		return true;
 	}
 	
 }
