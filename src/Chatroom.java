@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -15,28 +16,53 @@ public class Chatroom extends JFrame{
 		userOnline.addElement("one");
 		userOnline.addElement("two");
 		userOnline.addElement("three");
-		userOnline.addElement("four");
-		JList online = new JList(userOnline);
-		//getContentPane().setBounds(arg0);
-		//online.setBounds(30, 60,200,25);
-		JScrollPane a = new JScrollPane(online);
-		a.setBounds(30, 60, 300, 100);
-		a.setBackground(getContentPane().getBackground());
+		userOnline.addElement("three");
 		
+		JList online = new JList(userOnline);
+		TitledBorder nameTitle = new TitledBorder("‘⁄œﬂ”√ªß");
+		nameTitle.setTitleFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+		online.setBorder(nameTitle);
+		JScrollPane a = new JScrollPane(online);
+		a.setBounds(30, 60, 200, 100);
+		
+		TitledBorder nameTitle2 = new TitledBorder("¿Îœﬂ”√ªß");
+		nameTitle2.setTitleFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
 		Vector userOffline = new Vector();
 		userOffline.addElement("three");
 		userOffline.addElement("four");
 		JList offline = new JList(userOffline);
+		offline.setBorder(nameTitle2);
+		JScrollPane b = new JScrollPane(offline);
+		b.setBounds(30, 160, 200, 100);
+		 
 		
-		JLabel lab1 = new JLabel();
-		lab1.setText("‘⁄œﬂ∫√”—");
-		lab1.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
-		lab1.setIcon(new ImageIcon("img/ico1.png"));
-		//lab1.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-		lab1.setBounds(30, 30, 100, 25);
 		
-		getContentPane().add(lab1);
+		online.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				String name = (String)online.getSelectedValue();
+				JTextField chatLabel = new JTextField();
+				chatLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+				chatLabel.setBounds(250, 60, 200, 150);
+				chatLabel.setEditable(false);
+				chatLabel.setSize(200, 150);
+				chatLabel.setBackground(Color.white);
+				//chatLabel.setLineWrap(true);
+				TitledBorder nameTitle3 = new TitledBorder(name);
+				nameTitle3.setTitleFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+				chatLabel.setBorder(nameTitle3);
+				getContentPane().add(chatLabel);
+				
+				
+				
+			}
+			
+		});
+		
 		getContentPane().add(a);
+		getContentPane().add(b);
 		pack();	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500, 400);

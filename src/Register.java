@@ -78,12 +78,13 @@ public class Register extends JFrame{
 		setSize(300, 270);
 		setLocationRelativeTo(null);
 		
-	}
+	} 
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try{
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager.put("Button.font", new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 15));
 		} catch (Throwable e){
 			e.printStackTrace();
 		}

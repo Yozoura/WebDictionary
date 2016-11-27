@@ -55,7 +55,17 @@ public class mainScreen extends JFrame{
 		JLabel pic = new JLabel(imag);
 		logo.add(pic);
 			
-		
+		jbt.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFrame newFrame = new Search();
+				newFrame.setVisible(true);
+				
+			}
+			
+		});
 		
 		getContentPane().add("North", logout);
 		getContentPane().add("Center", logo);
