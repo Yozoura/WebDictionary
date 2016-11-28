@@ -8,7 +8,7 @@ import java.net.*;
 
 //æœåŠ¡å™¨ç«¯
 public class Server {
-	//è®¾å®šç«¯å£
+	//Éè¶¨¶Ë¿Ú
 	static int port=8000;
 	
 	public static void main(String[] args)throws Exception{		
@@ -21,12 +21,12 @@ public class Server {
 		*/
 			
 		///*
-		//æœåŠ¡å™¨ç«¯å»ºç«‹ä¸€ä¸ªServersocket
+		//½¨Á¢ServerSocket
 		ServerSocket server=new ServerSocket(port);	
 		//server.close();	
-		while(true){//ä¸åœæ¥æ”¶socket
+		while(true){//×è¶ÏÊ½½ÓÊÕ¿Í»§¶Ësocket
 			Socket socket=server.accept();
-			//é˜»å¡æ¥æ”¶æ–¹å¼
+			//½¨Á¢ĞÂÏß³Ì´¦Àí
 			Thread thread=new Thread(new Task(socket));
 			thread.start();
 		}
@@ -34,7 +34,7 @@ public class Server {
 	}
 
 
-//å¤šçº¿ç¨‹çš„å»ºç«‹
+//¶àÏß³ÌÀà
 static class Task implements Runnable{
 	private Socket socket;
 	
@@ -50,17 +50,17 @@ static class Task implements Runnable{
 		}
 	}
 	
-	//socketå¤„ç†
+	//socket´¦Àí
 	private void handleSocket()throws Exception{
-		//æ¥å—å®¢æˆ·ç«¯æ¶ˆæ¯
+		//ÊäÈëÁ÷
 		DataInputStream in=null;
 		in=new DataInputStream(socket.getInputStream());
 		
-		//å¤„ç†å®¢æˆ·ç«¯æ¶ˆæ¯
+		//Á÷µÄ´¦Àí
 		String news=in.readUTF();
 		String newsAnalyse[]=news.split("\\|");
 		String responseNews=handleNews(newsAnalyse);
-		//å›å¤å®¢æˆ·ç«¯æ¶ˆæ¯
+		//Êä³öÁ÷
 		DataOutputStream out=null;
 		out=new DataOutputStream(socket.getOutputStream());
 		out.writeUTF(responseNews);
@@ -76,11 +76,11 @@ static class Task implements Runnable{
 		String responseNews="";
 		switch(news[0]){
 		case "0":System.out.println("Client request connect");
-			responseNews="å·²è¿æ¥æœåŠ¡å™¨";
+			responseNews="Server has connected.";
 			break;
-		case "1":String word=news[1];//æŸ¥æ‰¾è¯å…¸
+		case "1":String word=news[1];//²éÕÒ´Êµä
 			try{
-				if(ifIsWord(word)){//è‹¥æ˜¯ä¸€ä¸ªå•è¯è¿›è¡ŒæŸ¥æ‰¾
+				if(ifIsWord(word)){//Èç¹ûÊÇÒ»¸öµ¥´Ê
 					String youdaoEx[]=YoudaoDicGet.Trans(word);
 					String baiduEx[]=BaiduDicGet.Trans(word);
 					String bingEx[]=BingDicGet.Trans(word);
@@ -101,7 +101,7 @@ static class Task implements Runnable{
 					}
 					responseNews=wordEx.toString();
 				}
-				else{//è‹¥ä¸æ˜¯ä¸€ä¸ªå•è¯åˆ™è¿”å›åŸè¯ç»„å³å¯
+				else{//Èç¹û²»ÊÇÒ»¸öµ¥´Ê
 					StringBuilder wordEx=new StringBuilder(responseNews);
 					wordEx.append(word);
 					wordEx.append("|");
@@ -115,10 +115,10 @@ static class Task implements Runnable{
 				e.printStackTrace();
 			}
 			break;
-		case "2"://è¯å…¸ç‚¹èµ
+		case "2"://´ÊµäµãÔŞ
 			like(Integer.parseInt(news[1]));
 			break;
-		case "3"://ç”¨æˆ·æ³¨å†Œ
+		case "3"://ÓÃ»§×¢²á
 			String registerName=news[1];
 			String registerKey=news[2];
 			String registerEmail=news[3];
@@ -129,26 +129,22 @@ static class Task implements Runnable{
 				responseNews="0";
 			}
 			break;
-		case "4"://ç”¨æˆ·ç™»å½•
+		case "4"://ÓÃ»§µÇÂ¼
 			String loginName=news[1];
 			String loginKey=news[2];
 			if(userLogin(loginName,loginKey)){
 				responseNews="1";
-				//TODO:åœ¨çº¿ç”¨æˆ·æ•°æ®ç®¡ç†æ¥å£ç™»å…¥
-				
-				
-				//***********************
 			}
 			else{
 				responseNews="0";
 			}
 			break;
-		case "5"://ç”¨æˆ·ç™»å‡º
+		case "5"://ÓÃ»§µÇ³ö
 			String logoutName=news[1];
 			userLogout(logoutName);
 			break;
-		case "6":
-			//TODO:è¿”å›åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
+		case "6"://¸üĞÂÔÚÏßÓÃ»§ÁĞ±í
+			//TODO:¸üĞÂÔÚÏßÓÃ»§Êı¾İ½á¹¹½Ó¿Ú
 			
 			
 			//**********************
@@ -174,7 +170,7 @@ public static boolean ifIsWord(String word){
 }
 
 public static void like(int i){
-	//TODO:è¯å…¸ç‚¹èµ
+	//TODO:µãÔŞÊı¾İ¿â½Ó¿Ú
 	
 	
 	//*******************
@@ -182,7 +178,7 @@ public static void like(int i){
 
 public static boolean userRegister(String name,String key,String email){
 	boolean registerSuccess=false;
-	//TODOï¼šç”¨æˆ·è´¦å·æ³¨å†Œ
+	//TODO:ÓÃ»§ÕË»§Êı¾İ¿â½Ó¿Ú
 	
 	
 	//*******************
@@ -191,7 +187,7 @@ public static boolean userRegister(String name,String key,String email){
 
 public static boolean userLogin(String name,String key){
 	boolean loginSuccess=false;
-	//TODO:ç”¨æˆ·è´¦å·ç™»å…¥
+	//TODO:ÔÚÏßÓÃ»§Êı¾İ¹ÜÀí
 	
 	
 	//*******************
@@ -199,7 +195,7 @@ public static boolean userLogin(String name,String key){
 }
 
 public static void userLogout(String name){
-	//TODO:ç”¨æˆ·å¸æˆ·ç™»å‡º
+	//TODO:ÔÚÏßÓÃ»§Êı¾İ¹ÜÀí
 	
 	
 	//*******************

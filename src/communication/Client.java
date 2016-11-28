@@ -4,14 +4,14 @@ import java.io.*;
 import java.net.*;
 
 public class Client {
-	//ï¿½Ë¿ï¿½
+	//Éè¶¨¶Ë¿Ú
 	static int port=8000;
 	static Socket socket=null;
 	static DataOutputStream  out=null;
 	static DataInputStream  in=null;
 	
 	public static void main(String []args) throws IOException {
-		//TODO:GUIï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
+		//TODO:GUI³õÊ¼»¯½Ó¿Ú
 		
 		
 		
@@ -34,7 +34,7 @@ public class Client {
 	public static void connect() {
 		connectPort();
 		try{
-			out.writeUTF("0|è¯·æ±‚è¿æ¥");
+			out.writeUTF("0|request connection");
 			String news=in.readUTF();
 			//TODO:
 			System.out.println(news);
@@ -72,8 +72,11 @@ public class Client {
 			//*****************
 			
 		} catch (IOException e) {
-			// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Éµï¿½ catch ï¿½ï¿½
+			// TODO 
+			
+			
 			e.printStackTrace();
+			//******************
 		}
 		return wordEx;
 	}
@@ -114,6 +117,8 @@ public class Client {
 			loginSuccess=true;
 		}
 		socket.close();
+		
+		
 		return loginSuccess;
 	}
 	
@@ -124,16 +129,16 @@ public class Client {
 		return;
 	}
 	
-	//å‘¨æœŸæ€§å‘é€ä¿¡æ¯æ›´æ–°åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
+	//¸üĞÂÔÚÏßÓÃ»§
 	public static void updateUserLogedin() throws IOException{
 		connectPort();
 		out.writeUTF("6");
 		String news=in.readUTF();
-		//TODO:æ ¹æ®è¿”å›çš„ç”¨æˆ·ä¿¡æ¯åˆ—è¡¨æ›´æ–°æ˜¾ç¤º
+		socket.close();
+		//TODO:¸üĞÂÔÚÏßÓÃ»§ ÁĞ±íÊı¾İ  GUI½Ó¿Ú
 		
 		
 		//***************************
-		socket.close();
 		return;
 	}
 }

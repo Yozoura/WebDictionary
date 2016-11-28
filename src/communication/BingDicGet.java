@@ -20,7 +20,8 @@ public class BingDicGet {
 	    StringBuilder contentBuf = new StringBuilder();  
 	    while ((line = bufReader.readLine()) != null) {  
 	        contentBuf.append(line);  
-	    }   
+	    }
+	    bufReader.close();
 	    String content=contentBuf.toString();
 	    
         Pattern searchMeanPattern = Pattern.compile("(?s)<div class=\"hd_area\">(.*?)<ul>(.*?)</ul></div>");
