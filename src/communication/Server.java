@@ -13,14 +13,14 @@ public class Server {
 	
 	public static void main(String[] args)throws Exception{		
 		//DicSearch Demo
-		///*
+		/*
 		String test[]=YoudaoDicGet.Trans("superman");
 		for(int i=0;i<test.length;i++){
 			System.out.println(test[i]);
 		}
-		//*/
+		*/
 			
-		/*
+		///*
 		//服务器端建立一个Serversocket
 		ServerSocket server=new ServerSocket(port);	
 		//server.close();	
@@ -115,19 +115,56 @@ static class Task implements Runnable{
 				e.printStackTrace();
 			}
 			break;
+		case "2":
+			like(Integer.parseInt(news[1]));
+			break;
+		case "3":
+			String name=news[1];
+			String key=news[2];
+			String email=news[3];
+			if(userRegister(name,key,email)){
+				responseNews="1";
+			}
+			else{
+				responseNews="0";
+			}
+			break;
 		default:break;
 		}
 		return responseNews;
 	}
 	
-	public boolean ifIsWord(String word){
-		String sp[]=word.split(" ");
-		if(sp.length>1){
-			return false;
-		}
-		return true;
-	}
+	
+	
 	
 }
+
+//Client Judge Function
+//**********************
+public static boolean ifIsWord(String word){
+	String sp[]=word.split(" ");
+	if(sp.length>1){
+		return false;
+	}
+	return true;
+}
+
+public static void like(int i){
+	//TODO:词典点赞数据库对接
+	
+	
+	//*******************
+}
+
+public static boolean userRegister(String name,String key,String email){
+	boolean registerSuccess=false;
+	//TODO：用户帐号数据库对接
+	
+	
+	//*******************
+	return registerSuccess;
+}
+
+//**********************
 
 }

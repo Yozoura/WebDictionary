@@ -22,7 +22,7 @@ public class Client {
 	}
 	
 	public static void connectPort(){
-		try{//�ͻ��˳�ʼ��
+		try{//
 			socket=new Socket("localhost",port);
 			out=new DataOutputStream(socket.getOutputStream());
 			in=new DataInputStream(socket.getInputStream());
@@ -76,5 +76,32 @@ public class Client {
 			e.printStackTrace();
 		}
 		return wordEx;
+	}
+	
+	public static void sendLike(int i) throws IOException{
+		connectPort();
+		out.writeUTF("2|"+Integer.toString(i));
+		socket.close();
+	}
+	
+	public static void like(String dicType) throws IOException{
+		switch(dicType){
+		case "youdao":sendLike(0);break;
+		case "baidu":sendLike(1);break;
+		case "bing":sendLike(2);break;
+		default:break;
+		}
+	}
+	
+	public static boolean userRegister(String name,String key,String email) throws IOException{
+		boolean registerSuccess=false;
+		connectPort();
+		out.writeUTF("3|"+name+"|"+key+"|"+email);
+		String news=in.readUTF();
+		if(news=="1"){
+			registerSuccess=true;
+		}
+		socket.close();
+		return registerSuccess;
 	}
 }
