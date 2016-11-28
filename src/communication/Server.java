@@ -78,7 +78,7 @@ static class Task implements Runnable{
 		case "0":System.out.println("Client request connect");
 			responseNews="已连接服务器";
 			break;
-		case "1":String word=news[1];
+		case "1":String word=news[1];//查找词典
 			try{
 				if(ifIsWord(word)){//若是一个单词进行查找
 					String youdaoEx[]=YoudaoDicGet.Trans(word);
@@ -115,19 +115,43 @@ static class Task implements Runnable{
 				e.printStackTrace();
 			}
 			break;
-		case "2":
+		case "2"://词典点赞
 			like(Integer.parseInt(news[1]));
 			break;
-		case "3":
-			String name=news[1];
-			String key=news[2];
-			String email=news[3];
-			if(userRegister(name,key,email)){
+		case "3"://用户注册
+			String registerName=news[1];
+			String registerKey=news[2];
+			String registerEmail=news[3];
+			if(userRegister(registerName,registerKey,registerEmail)){
 				responseNews="1";
 			}
 			else{
 				responseNews="0";
 			}
+			break;
+		case "4"://用户登录
+			String loginName=news[1];
+			String loginKey=news[2];
+			if(userLogin(loginName,loginKey)){
+				responseNews="1";
+				//TODO:在线用户数据管理接口登入
+				
+				
+				//***********************
+			}
+			else{
+				responseNews="0";
+			}
+			break;
+		case "5"://用户登出
+			String logoutName=news[1];
+			userLogout(logoutName);
+			break;
+		case "6":
+			//TODO:返回在线用户列表
+			
+			
+			//**********************
 			break;
 		default:break;
 		}
@@ -150,7 +174,7 @@ public static boolean ifIsWord(String word){
 }
 
 public static void like(int i){
-	//TODO:词典点赞数据库对接
+	//TODO:词典点赞
 	
 	
 	//*******************
@@ -158,13 +182,29 @@ public static void like(int i){
 
 public static boolean userRegister(String name,String key,String email){
 	boolean registerSuccess=false;
-	//TODO：用户帐号数据库对接
+	//TODO：用户账号注册
 	
 	
 	//*******************
 	return registerSuccess;
 }
 
+public static boolean userLogin(String name,String key){
+	boolean loginSuccess=false;
+	//TODO:用户账号登入
+	
+	
+	//*******************
+	return loginSuccess;
+}
+
+public static void userLogout(String name){
+	//TODO:用户帐户登出
+	
+	
+	//*******************
+	return;
+}
 //**********************
 
 }

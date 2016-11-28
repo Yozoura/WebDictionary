@@ -104,4 +104,36 @@ public class Client {
 		socket.close();
 		return registerSuccess;
 	}
+	
+	public static boolean userLogin(String name,String key) throws IOException{
+		boolean loginSuccess=false;
+		connectPort();
+		out.writeUTF("4|"+name+"|"+key);
+		String news=in.readUTF();
+		if(news=="1"){
+			loginSuccess=true;
+		}
+		socket.close();
+		return loginSuccess;
+	}
+	
+	public static void userLogout(String name) throws IOException{
+		connectPort();
+		out.writeUTF("5|"+name);
+		socket.close();
+		return;
+	}
+	
+	//周期性发送信息更新在线用户列表
+	public static void updateUserLogedin() throws IOException{
+		connectPort();
+		out.writeUTF("6");
+		String news=in.readUTF();
+		//TODO:根据返回的用户信息列表更新显示
+		
+		
+		//***************************
+		socket.close();
+		return;
+	}
 }
