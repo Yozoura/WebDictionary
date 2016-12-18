@@ -1,8 +1,10 @@
 package communication;
 
-import communication.BaiduDicGet;
+import communication.JinshanDicGet;
 import communication.YoudaoDicGet;
 import communication.BingDicGet;
+import data.ClientInfo;
+import data.DicInfo;
 import java.io.*;
 import java.net.*;
 
@@ -14,11 +16,11 @@ public class Server {
 	public static void main(String[] args)throws Exception{		
 		//DicSearch Demo
 		/*
-		String test[]=YoudaoDicGet.Trans("superman");
+		String test[]=JinshanDicGet.Trans("superman");
 		for(int i=0;i<test.length;i++){
 			System.out.println(test[i]);
 		}
-		*/
+		//*/
 			
 		///*
 		//建立ServerSocket
@@ -82,7 +84,7 @@ static class Task implements Runnable{
 			try{
 				if(ifIsWord(word)){//如果是一个单词
 					String youdaoEx[]=YoudaoDicGet.Trans(word);
-					String baiduEx[]=BaiduDicGet.Trans(word);
+					String baiduEx[]=JinshanDicGet.Trans(word);
 					String bingEx[]=BingDicGet.Trans(word);
 					StringBuilder wordEx=new StringBuilder(responseNews);			
 					for(int i=0;i<youdaoEx.length;i++){
@@ -117,6 +119,10 @@ static class Task implements Runnable{
 			break;
 		case "2"://词典点赞
 			like(Integer.parseInt(news[1]));
+			//TODO:
+			
+			
+			//
 			break;
 		case "3"://用户注册
 			String registerName=news[1];
@@ -132,7 +138,8 @@ static class Task implements Runnable{
 		case "4"://用户登录
 			String loginName=news[1];
 			String loginKey=news[2];
-			if(userLogin(loginName,loginKey)){
+			String loginIp=news[3];
+			if(userLogin(loginName,loginKey,loginIp)){
 				responseNews="1";
 			}
 			else{
@@ -185,20 +192,29 @@ public static boolean userRegister(String name,String key,String email){
 	return registerSuccess;
 }
 
-public static boolean userLogin(String name,String key){
+public static boolean userLogin(String name,String key,String ip){
 	boolean loginSuccess=false;
 	//TODO:在线用户数据管理
 	
+	if(ClientInfo.ifLogin(name)){
+		
+	}
+	else{
+		ClientInfo.addClientNode(name, ip);
+	}
 	
 	//*******************
+	
 	return loginSuccess;
 }
 
 public static void userLogout(String name){
 	//TODO:在线用户数据管理
-	
-	
+	if(ClientInfo.ifLogin(name)){
+		ClientInfo.removeClientNode(name);
+	}
 	//*******************
+	
 	return;
 }
 //**********************

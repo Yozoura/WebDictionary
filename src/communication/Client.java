@@ -17,8 +17,10 @@ public class Client {
 		
 		//*****************	
 		//test
+		///*
 		connect();
-		searchWord("supermans");
+		searchWord("love");
+		//*/
 	}
 	
 	public static void connectPort(){
@@ -90,7 +92,7 @@ public class Client {
 	public static void like(String dicType) throws IOException{
 		switch(dicType){
 		case "youdao":sendLike(0);break;
-		case "baidu":sendLike(1);break;
+		case "jinshan":sendLike(1);break;
 		case "bing":sendLike(2);break;
 		default:break;
 		}
@@ -110,14 +112,20 @@ public class Client {
 	
 	public static boolean userLogin(String name,String key) throws IOException{
 		boolean loginSuccess=false;
-		connectPort();
-		out.writeUTF("4|"+name+"|"+key);
-		String news=in.readUTF();
-		if(news=="1"){
-			loginSuccess=true;
+		InetAddress myHostIp=null;
+		try{
+			myHostIp=InetAddress.getLocalHost();
+			String ip=myHostIp.getHostAddress();
+			connectPort();
+			out.writeUTF("4|"+name+"|"+key+"|"+ip);
+			String news=in.readUTF();
+			if(news=="1"){
+				loginSuccess=true;
+			}
+			socket.close();
+		}catch (Exception e){
+			e.printStackTrace();
 		}
-		socket.close();
-		
 		
 		return loginSuccess;
 	}
